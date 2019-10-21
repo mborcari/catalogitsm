@@ -1,0 +1,37 @@
+{% extends 'catalogo/base.html' %} 
+{% block  title %} Catalogo de serviço{% endblock  %}
+{% block main%}
+{% load static %}
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif%}
+<div class="container">
+        <form class="form-row my-4">
+            <div class="col-lg-10 col-md-8 col-sm-8 input-group-lg">
+                <input class="form-control col-sm-12" id="pesquisar" type="search" placeholder="Ex: criar usuário, instalar software, computador, notebook..." aria-label="Search">
+            </div>
+            <div class="col-lg-2 col-md-4 col-sm-4">
+                <button class="btn btn-outline-info col-sm-12 btn-lg" type="submit">Pesquisar</button>
+            </div>
+        </form>
+</div>
+{% if categorias%}
+<main>
+    <div class="container-fluid">
+        <div class="container">
+            {% for categoria in categorias %}
+                {% if forloop.first %}<div class="row">{% endif%}
+                    <div class="col-sm-1 col-md-3 mb-2 mr-4" style="max-width: 15rem">
+                        <div class="card" >
+                            <img class="card-img-top" src="{% static '/img/' %}{{categoria.icone}}" alt="Card image">
+                            <div class="card-body text-center">
+                                <h4 class="card-title"> <a href="{{ categoria.id }}" class="btn btn-info btn-block"> {{ categoria.nome }} </a></h4>
+                            </div>
+                        </div>
+                    </div>
+                {% if forloop.counter|divisibleby:4 %}</div> <div class="row">{% endif %}
+                {% if forloop.last %}</div>{% endif %}
+            {% endfor %}
+        </div>
+    </div>
+</main>
+{% endif %}
+{% endblock %}

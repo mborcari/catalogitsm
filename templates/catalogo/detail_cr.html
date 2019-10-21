@@ -1,0 +1,39 @@
+{% extends 'catalogo/base.html' %} 
+{% block  title %} Catalogo de serviço - Abertura{% endblock  %}
+{% block main%}
+{% load static %}
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif%}
+<main>
+    <div class="container-fluid">
+        <div class="mx=10">
+            <div class="container">
+                <form action="/detail_cr" method="post">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="usuario"> Usuário </label>
+                        <input id="usuario" class="form-control" type="text" name="usuario">
+                        <label for="telefone"> Telefone para contato </label>
+                        <input id="telefone" class="form-control" type="text" name="telefone">
+                        <label for="descricao">Descrição do seu chamado:</label>
+                        <textarea  id="descricao" class="form-control" name="descricao" rows="8"></textarea>
+                    </div>
+                    {% for campo in propriedades %}
+                        {% if campo.tipo == "dta" %}
+                            <div class="form-group">
+                                <label for="{{ campo.nome }}"> {{ campo.nome }} </label>
+                                <input id="{{ campo.nome }}" class="form-control" type="date" name="{{ campo.nome}}">
+                            </div>
+                        {% else %}
+                        <div class="form-group">
+                            <label for="{{ campo.nome }}"> {{ campo.nome }} </label>
+                            <input id="{{ campo.nome }}" class="form-control" type="text" name="{{ campo.nome}}">
+                        </div>
+                        {% endif %}
+                    {% endfor %}
+                    <input type="submit" class="btn btn-primary" value="Abrir chamado">
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

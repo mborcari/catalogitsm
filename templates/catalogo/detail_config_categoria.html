@@ -1,0 +1,26 @@
+{% extends 'catalogo/base.html' %} 
+{% block  title %} Catalogo de serviço - Categoria{% endblock  %}
+{% block main%}
+{% load static %}
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif%}
+<main>
+    <div class="container-fluid">
+        <div class="container">
+            <form action="#" method="post" class="form-group">
+                    {% csrf_token %}
+                    {% for field in form %}
+                        <div class="form-group">
+                            {{ field.errors }}
+                            {{ field.label_tag }} {{ field }}
+                            {% comment %} {% if field.help_text %}
+                                <p class="help">{{ field.help_text|safe }}</p>
+                            {% endif %} {% endcomment %}
+                        </div>
+                    {% endfor %}
+
+                <input type="submit" class="btn btn-primary" value="Salvar">
+            </form>
+        </div>
+    </div>
+</main>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends 'catalogo/base.html' %} 
+{% block  title %} Catalogo de serviço - Configuração Categorias{% endblock  %}
+{% block main%}
+{% load static %}
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif%}
+<main>
+    <div class="container-fluid mt-4">
+        <table class="table table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Nome da propriedade </th>
+                    <th scope="col">Categoria relacionada</th>
+                    <th scope="col">Obrigatório?</th>
+                    <th scope="col">Tipo</th>
+                    <th scope="col">Propriedade pai</th>
+                    <th scope="col">Tamanho </th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for propriedade  in propriedades %}
+                <tr>
+                    <td>{{ propriedade.nome }}</td>
+                    <td>{{ propriedade.categoria }}</td>
+                    <td>{{ propriedade.obrigatorio }}</td>
+                    <td>{{ propriedade.tipo }}</td>
+                    <td>{{ propriedade.propriedade_pai.nome}}</td>
+                    <td>{{ propriedade.tamanho}}</td>
+                    <td> <a class="btn btn-success" href="{{ propriedade.get_absolute_url }}" role="button">Editar</a> </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</main>
+{% endblock %}

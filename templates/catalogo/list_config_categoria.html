@@ -1,0 +1,39 @@
+{% extends 'catalogo/base.html' %} 
+{% block  title %} Catalogo de serviço - Configuração Categorias{% endblock  %}
+{% block main%}
+{% load static %}
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif%}
+<main>
+    <div class="container-fluid mt-4">
+        <table class="table table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Categoria pai </th>
+                    <th scope="col">CA ID</th>
+                    <th scope="col">Incidente?</th>
+                    <th scope="col">Solicitação?</th>
+                    <th scope="col">Ícone </th>
+                    <th scope="col">Grupo</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for categoria  in categorias %}
+                <tr>
+                    <td>{{ categoria.nome }}</td>
+                    <td>{{ categoria.parent.nome }}</td>
+                    <td>{{ categoria.ca_id }}</td>
+                    <td>{{ categoria.in_flag}}</td>
+                    <td>{{ categoria.cr_flag}}</td>
+                    <td>{{ categoria.icone}}</td>
+                    <td>{{ categoria.grupo_ca}}</td>
+                    {% comment %} <td> <a class="btn btn-success" href="{% url 'catalogo:detail_config_categoria' categoria.id %}" role="button">Editar</a> </td> {% endcomment %}
+                    <td> <a class="btn btn-success" href="{{ categoria.get_absolute_url }}" role="button">Editar</a> </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</main>
+{% endblock %}
