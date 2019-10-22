@@ -13,7 +13,6 @@ urlpatterns = [
     re_path(r'^config_propriedade/(?P<prop_id>\d+)', views.detail_config_propriedade, name='detail_config_propriedade'),
     re_path(r'^config_propriedade', views.config_propriedade, name='config_propriedade'),
     
-
     re_path(r'^carrega_categorias', views.carrega_categorias),
     re_path(r'^deleta_categorias', views.deleta_categorias)
 ]
