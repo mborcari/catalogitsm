@@ -4,10 +4,19 @@
 {% load static %}
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif%}
 <main>
-    <div class="container">
+    <div class="container py-5 bg-light">
             <form action="/detail_edit_config.html" method="post">
                     {% csrf_token %}
-                    {{ form.as_p}}
+                   {% for field in form %}
+                        <div class="form-group">
+                            {{ field.errors }}
+                            <label for="{{field.id_for_label}}"> {{ field.label }} </label> 
+                            {{ field }}
+                            {% comment %} {% if field.help_text %}
+                                <p class="help">{{ field.help_text|safe }}</p>
+                            {% endif %} {% endcomment %}
+                        </div>
+                    {% endfor %} 
                 <input type="submit" class="btn btn-primary" value="Salvar">
             </form>
         </div>

@@ -77,19 +77,19 @@ class Config(models.Model):
         também as configuraçõe de integração com AD.
     '''
     nome = models.CharField(max_length=200, name='nome', default="Configuração")
-    CA_host = models.CharField(max_length=50)
-    CA_port = models.IntegerField(default=8050)
-    CA_username = models.CharField(max_length=50, default=None)
-    CA_password = models.CharField(max_length=50, default=None)
+    CA_host = models.CharField(max_length=50, verbose_name='CA Host')
+    CA_port = models.IntegerField(default=8050, verbose_name='CA Porta')
+    CA_username = models.CharField(max_length=50, default=None, verbose_name='CA Username')
+    CA_password = models.CharField(max_length=50, default=None, verbose_name='CA Password')
     LISTA_HTTP = (
      ('http://', 'http'),
     ('https://', 'https')
     )
-    CA_conn = models.CharField(max_length=10, choices=LISTA_HTTP, default="http")
-    LDAP_username = models.CharField(max_length=50, default=None)
-    LDAP_password = models.CharField(max_length=50, default=None)
-    LDAP_DN = models.CharField(max_length=100, default=None)
-    last_date_mod = models.DateTimeField(auto_now=True)
+    CA_conn = models.CharField(max_length=10, choices=LISTA_HTTP, default="http", verbose_name='CA Procotolo')
+    LDAP_username = models.CharField(max_length=50, default=None, verbose_name='LDAP Username')
+    LDAP_password = models.CharField(max_length=50, default=None, verbose_name='LDAP Passowrd')
+    LDAP_DN = models.CharField(max_length=100, default=None, verbose_name='LDAP DN')
+    last_date_mod = models.DateTimeField(auto_now=True, verbose_name='Última data de alteração')
     
     def ca_url_endpoint(self):
         return "%s%s:%s/rest_access/" % (tipo, host, port)

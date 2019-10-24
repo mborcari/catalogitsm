@@ -27,10 +27,9 @@ def list_categorias(request, categoria_id):
 
 ###### Detail da configuração de integração
 def detail_config(request):
-    config_retornadas = Config.objects.all()
+    config_retornada = Config.objects.get(nome='DEFAULT')
     dados = {}
-    dados["form"] = FormConfig
-    dados["categorias"] = config_retornadas
+    dados["form"] = FormConfig(instance=config_retornada)
     return render(request, 'catalogo/detail_config.html', dados )
 
 
