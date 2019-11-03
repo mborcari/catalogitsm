@@ -23,7 +23,8 @@ class Categoria(AbstractEntity):
     hierarquica. Categorias finais, são categorias que definem o serviço e que \
     tem o persid da categoria do CA SDM.
     '''
-    icone = models.CharField(max_length=200, blank=True)
+    icone = models.CharField(max_length=20, blank=True)
+    figure = models.CharField(max_length=200, blank=True)
     parent = models.ForeignKey('self', on_delete=models.SET_NULL, \
         blank=True, null=True)
     in_flag = models.BooleanField(default=False, help_text='É valido para incidente?', \

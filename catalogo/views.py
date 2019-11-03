@@ -28,29 +28,33 @@ def list_categorias(request, categoria_id):
 ###### Detail da configuração de integração
 def detail_config(request):
     config_retornada = Config.objects.get(nome='DEFAULT')
-    dados = {}
-    dados["form"] = FormConfig(instance=config_retornada)
+    dados = {"form" : FormConfig(instance=config_retornada)}
     return render(request, 'catalogo/detail_config.html', dados )
 
 
 ###### View da configuração de categoria
-def config_categoria(request):
+def list_config_categoria(request):
     categorias_retornadas = Categoria.objects.all()
-    dados = {}
-    dados["form"] = FormCategoria
-    dados["categorias"] = categorias_retornadas
+    dados = {"form" : FormCategoria, "categorias" : categorias_retornadas}
     return render(request, 'catalogo/list_config_categoria.html', dados )
 
 def detail_config_categoria(request, categoria_id):
     categoria_instance = Categoria.objects.get(pk=categoria_id)
-    dados = {}
-    dados["form"] = FormCategoria(instance=categoria_instance)
+    dados = {"form" : FormCategoria(instance=categoria_instance) }
+    return render(request, 'catalogo/detail_config_categoria.html', dados)
+
+def new_config_categoria(request):
+    if request.method == 'POST':
+        form = FormCategoria(request.POST)
+        if form.is_valid():
+            return HttpResponse('Objeto cadastrado')
+    else:
+        dados = {"form" : FormCategoria}
     return render(request, 'catalogo/detail_config_categoria.html', dados)
 
 
-
 ###### View da configuração de propriedade
-def config_propriedade(request):
+def list_config_propriedade(request):
     propriedades_retornadas = Propriedade.objects.all()
     dados = {}
     dados["form"] = FormPropriedade
@@ -63,6 +67,11 @@ def detail_config_propriedade(request, prop_id):
     dados["form"] = FormPropriedade(instance=prop_instance)
     return render(request, 'catalogo/detail_config_propriedade.html', dados)
 
+def config_propriedade(request):
+    prop_instance = Propriedade.objects.get(pk=prop_id)
+    dados = {}
+    dados["form"] = FormPropriedade(instance=prop_instance)
+    return render(request, 'catalogo/detail_config_propriedade.html', dados)
 
 
 def detail_cr(request, categoria_id):

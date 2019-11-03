@@ -4,10 +4,9 @@
 {% load static %}
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif%}
 <main>
-    <div class="container-fluid">
-        <div class="mx=10">
-            <div class="container">
-                <form action="/detail_cr" method="post">
+    <div class="container-fluid ">
+            <div class="container  my-4 w3-border w3-round-xlarge">
+                <form action="/detail_cr" method="post" class='w3-container my-4'>
                     {% csrf_token %}
                     <div class="form-group">
                         <label for="usuario"> Usuário </label>
@@ -17,6 +16,7 @@
                         <label for="descricao">Descrição do seu chamado:</label>
                         <textarea  id="descricao" class="form-control" name="descricao" rows="8"></textarea>
                     </div>
+                    <hr></hr>
                     {% for campo in propriedades %}
                         {% if campo.tipo == "dta" %}
                             <div class="form-group">
@@ -33,7 +33,6 @@
                     <input type="submit" class="btn btn-primary" value="Abrir chamado">
                 </form>
             </div>
-        </div>
     </div>
 </main>
 {% endblock %}

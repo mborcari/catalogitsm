@@ -8,7 +8,7 @@ class CategoriaAdminInline(admin.TabularInline):
     model = Propriedade
 
 class CategoriaAdmin(admin.ModelAdmin):
-    list_display = ('nome', 'parent', 'icone', 'in_flag', 'cr_flag',\
+    list_display = ('nome', 'parent', 'icone', 'figure', 'in_flag', 'cr_flag',\
     'grupo_ca', 'persid_pcat_ca', 'script')
     list_filter = ('parent', 'in_flag', 'cr_flag', 'created_date', 'grupo_ca')
     inlines = [CategoriaAdminInline]

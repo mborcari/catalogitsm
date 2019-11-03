@@ -5,17 +5,18 @@
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif%}
 <main>
     <div class="container-fluid mt-4">
-        <table class="table table-striped">
-            <thead class="thead-dark">
-                <tr>
+        <table class="w3-table-all w3-striped w3-small w3-centered">
+            <thead>
+                <tr class="w3-dark-gray w3-center w3-medium">
                     <th scope="col">Nome</th>
-                    <th scope="col">Categoria pai </th>
+                    <th scope="col">Categoria pai</th>
                     <th scope="col">CA ID</th>
                     <th scope="col">Incidente?</th>
                     <th scope="col">Solicitação?</th>
-                    <th scope="col">Ícone </th>
+                    <th scope="col">Ícone</th>
+                    <th scope="col">Figura</th>
                     <th scope="col">Grupo</th>
-                    <th scope="col"></th>
+                    <th scope="col"> <a name="" id="" class="w3-button w3-teal" href="{% url 'catalogo:new_config_categoria' %}" role="button">+</a></th>
                 </tr>
             </thead>
             <tbody>
@@ -24,12 +25,13 @@
                     <td>{{ categoria.nome }}</td>
                     <td>{{ categoria.parent.nome }}</td>
                     <td>{{ categoria.ca_id }}</td>
-                    <td>{{ categoria.in_flag}}</td>
-                    <td>{{ categoria.cr_flag}}</td>
+                    {% if  categoria.in_flag == True %}<td> Sim </td> {% else %} <td> Não </td> {% endif %}
+                    {% if  categoria.cr_flag == True %}<td> Sim </td> {% else %} <td> Não </td> {% endif %}
                     <td>{{ categoria.icone}}</td>
-                    <td>{{ categoria.grupo_ca}}</td>
+                    <td>{{ categoria.figure}}</td>
+                    {% if  categoria.grupo_ca %}<td> {{ categoria.grupo_ca}} </td> {% else %} <td>  </td> {% endif %}
                     {% comment %} <td> <a class="btn btn-success" href="{% url 'catalogo:detail_config_categoria' categoria.id %}" role="button">Editar</a> </td> {% endcomment %}
-                    <td> <a class="btn btn-success" href="{{ categoria.get_absolute_url }}" role="button">Editar</a> </td>
+                    <td> <a class="w3-button w3-teal" href="{{ categoria.get_absolute_url }}" role="button">Editar</a> </td>
                 </tr>
                 {% endfor %}
             </tbody>

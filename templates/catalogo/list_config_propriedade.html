@@ -5,16 +5,16 @@
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif%}
 <main>
     <div class="container-fluid mt-4">
-        <table class="table table-striped">
-            <thead class="thead-dark">
-                <tr>
+        <table class="w3-table-all w3-striped w3-small w3-centered">
+            <thead>
+                <tr class="w3-dark-gray w3-center w3-medium">
                     <th scope="col">Nome da propriedade </th>
                     <th scope="col">Categoria relacionada</th>
                     <th scope="col">Obrigatório?</th>
                     <th scope="col">Tipo</th>
                     <th scope="col">Propriedade pai</th>
                     <th scope="col">Tamanho </th>
-                    <th scope="col"></th>
+                     <th scope="col"> <a name="" id="" class="w3-button w3-teal" href="{% url 'catalogo:new_config_categoria' %}" role="button">+</a></th>
                 </tr>
             </thead>
             <tbody>
@@ -26,7 +26,7 @@
                     <td>{{ propriedade.tipo }}</td>
                     <td>{{ propriedade.propriedade_pai.nome}}</td>
                     <td>{{ propriedade.tamanho}}</td>
-                    <td> <a class="btn btn-success" href="{{ propriedade.get_absolute_url }}" role="button">Editar</a> </td>
+                    <td> <a class="w3-button w3-teal" href="{{ propriedade.get_absolute_url }}" role="button">Editar</a> </td>
                 </tr>
                 {% endfor %}
             </tbody>

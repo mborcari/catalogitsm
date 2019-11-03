@@ -8,18 +8,19 @@
     {% comment %} <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"> {% endcomment %}
     <link rel="stylesheet" href="{% static '/css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static '/css/w3.css' %}">
+    <script src="https://kit.fontawesome.com/819dcc4a7a.js" crossorigin="anonymous"></script>
     <title> {% block title %} {% endblock  %}</title>
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark" style='box-shadow: 0 0 15px 0 #888888'>
         <div class="container">
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
                     <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse btn" id="collapsibleNavbar">
+            <div class="collapse navbar-collapse" id="collapsibleNavbar">
                 <ul class="navbar-nav">
-                    <li class="nav-item active">
+                    <li class="nav-item">
                         <a class="nav-link" href="/catalogo">Catalogo de Serviço</a>
                     </li>
                     <li class="nav-item dropdown">
@@ -27,8 +28,8 @@
                             Configuração do Catálogo
                         </a>
                         <div class="dropdown-menu dropdown-menu-center">
-                            <a class="dropdown-item" href="{% url 'catalogo:config_categoria' %}">Categoria</a>
-                            <a class="dropdown-item" href="{% url 'catalogo:config_propriedade' %}" role="button">Propriedade</a>
+                            <a class="dropdown-item" href="{% url 'catalogo:list_config_categoria' %}">Categoria</a>
+                            <a class="dropdown-item" href="{% url 'catalogo:list_config_propriedade' %}" role="button">Propriedade</a>
                             <a class="dropdown-item" href=" {% url 'catalogo:detail_config' %}" role="button">CA SDM</a>
                         </div>
                     </li>
