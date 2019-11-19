@@ -1,8 +1,9 @@
 {% extends 'catalogo/base.html' %} 
-{% block  title %} Catalogo de serviço - Configuração Categorias{% endblock  %}
+{% block  title %} Catalogo de serviço - Configuração Categorias {% endblock  %}
 {% block main%}
 {% load static %}
-{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif%}
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+ 
 <main>
     <div class="container-fluid mt-4">
         <table class="w3-table-all w3-striped w3-small w3-centered">
@@ -16,7 +17,7 @@
                     <th scope="col">Ícone</th>
                     <th scope="col">Figura</th>
                     <th scope="col">Grupo</th>
-                    <th scope="col"> <a name="" id="" class="w3-button w3-teal" href="{% url 'catalogo:new_config_categoria' %}" role="button">+</a></th>
+                    <th scope="col"> <a name="create_categoria" id="create_categoria" class="w3-button w3-teal" href="{% url 'catalogo:create_config_categoria' %}" role="button">Criar +</a></th>
                 </tr>
             </thead>
             <tbody>
@@ -31,7 +32,7 @@
                     <td>{{ categoria.figure}}</td>
                     {% if  categoria.grupo_ca %}<td> {{ categoria.grupo_ca}} </td> {% else %} <td>  </td> {% endif %}
                     {% comment %} <td> <a class="btn btn-success" href="{% url 'catalogo:detail_config_categoria' categoria.id %}" role="button">Editar</a> </td> {% endcomment %}
-                    <td> <a class="w3-button w3-teal" href="{{ categoria.get_absolute_url }}" role="button">Editar</a> </td>
+                    <td> <a name="edit_categoria_{{categoria.id}}" id="edit_categoria_{{categoria.id}}" class="w3-button w3-teal" href="{{ categoria.get_absolute_url }}" role="button">Editar</a> </td>
                 </tr>
                 {% endfor %}
             </tbody>

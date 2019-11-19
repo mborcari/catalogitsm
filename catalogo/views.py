@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 from django.urls import reverse
 from .models import Categoria, Propriedade, Config
 from .forms import FormCategoria, FormPropriedade, FormConfig
@@ -26,32 +26,70 @@ def list_categorias(request, categoria_id):
         return render(request, 'catalogo/detail_cr.html', dados )
 
 ###### Detail da configuração de integração
-def detail_config(request):
-    config_retornada = Config.objects.get(nome='DEFAULT')
-    dados = {"form" : FormConfig(instance=config_retornada)}
-    return render(request, 'catalogo/detail_config.html', dados )
+def detail_config_integration(request):
+    try:
+        config_instanced = Config.objects.get(nome='DEFAULT')
+    except Config.DoesNotExist:
+        raise Http404("Configuração não encontrada.")
+    if request.method == 'POST':
+        form = FormConfig(request.POST, instance=config_instanced)
+        if form.is_valid():
+            form.save()
+            return redirect('/')
+    elif request.method == 'GET':
+        form = {"form" : FormConfig(instance=config_instanced)}
+        return render(request, 'catalogo/detail_config_integration.html', form)
 
 
 ###### View da configuração de categoria
 def list_config_categoria(request):
-    categorias_retornadas = Categoria.objects.all()
-    dados = {"form" : FormCategoria, "categorias" : categorias_retornadas}
-    return render(request, 'catalogo/list_config_categoria.html', dados )
+    try:
+        categorias_retornadas = Categoria.objects.all()
+        dados = {"form" : FormCategoria, "categorias" : categorias_retornadas}
+        return render(request, 'catalogo/list_config_categoria.html', dados )
+    except Categoria.DoesNotExist:
+        raise Http404("Falha ao recuperar registros no banco de dados.")
 
 def detail_config_categoria(request, categoria_id):
-    categoria_instance = Categoria.objects.get(pk=categoria_id)
-    dados = {"form" : FormCategoria(instance=categoria_instance) }
-    return render(request, 'catalogo/detail_config_categoria.html', dados)
+    ''' Função para ver, atualizar ou deletar uma categoria.
+    '''
+    try:
+        categoria_instanced = Categoria.objects.get(pk=categoria_id)
+    except Categoria.DoesNotExist:
+        raise Http404("Registro de categoria não existe.")
+    # para atualizar
+    if request.method == 'POST':
+        form = FormCategoria(request.POST, instance=categoria_instanced)
+        if form.is_valid():
+            form.save()
+            return redirect("catalogo:list_config_categoria" )
+    # Para get
+    elif request.method == 'GET':
+        dados = {"form" : FormCategoria(instance=categoria_instanced), "categoria_id" : categoria_id }
+        return render(request, 'catalogo/detail_config_categoria.html', dados)
 
-def new_config_categoria(request):
+
+def create_config_categoria(request):
     if request.method == 'POST':
         form = FormCategoria(request.POST)
         if form.is_valid():
-            return HttpResponse('Objeto cadastrado')
-    else:
-        dados = {"form" : FormCategoria}
-    return render(request, 'catalogo/detail_config_categoria.html', dados)
+            form.save()
+            return redirect("catalogo:list_config_categoria")
+    elif request.method == 'GET':
+        form = {"form" : FormCategoria}
+        return render(request, 'catalogo/create_config_categoria.html', form)
 
+def delete_config_categoria(request, categoria_id):
+    ''' Função para deletar uma categoria.
+    '''
+    try:
+        categoria_instanced = Categoria.objects.get(pk=categoria_id)
+    except Categoria.DoesNotExist:
+        raise Http404("Registro de categoria não existe.")
+    # para atualizar
+    if request.method == 'POST':
+        categoria_instanced.delete()
+        return redirect("catalogo:list_config_categoria" )
 
 ###### View da configuração de propriedade
 def list_config_propriedade(request):
@@ -62,16 +100,39 @@ def list_config_propriedade(request):
     return render(request, 'catalogo/list_config_propriedade.html', dados )
 
 def detail_config_propriedade(request, prop_id):
-    prop_instance = Propriedade.objects.get(pk=prop_id)
-    dados = {}
-    dados["form"] = FormPropriedade(instance=prop_instance)
-    return render(request, 'catalogo/detail_config_propriedade.html', dados)
+    try:
+        prop_instanced = Propriedade.objects.get(pk=prop_id)
+    except Categoria.DoesNotExist:
+        raise Http404("Registro de categoria não existe.")
+    if request.method == 'POST':
+        form = FormPropriedade(request.POST, instance=prop_instanced)
+        if form.is_valid():
+            form.save()
+            return redirect('catalogo:list_config_propriedade')
+    elif request.method == 'GET':
+        dados = {'form' : FormPropriedade(instance=prop_instanced), 'prop_id' : prop_id}
+        return render(request, 'catalogo/detail_config_propriedade.html', dados)
 
-def config_propriedade(request):
-    prop_instance = Propriedade.objects.get(pk=prop_id)
-    dados = {}
-    dados["form"] = FormPropriedade(instance=prop_instance)
-    return render(request, 'catalogo/detail_config_propriedade.html', dados)
+def create_config_propriedade(request):
+    if request.method == 'POST':
+        form = FormPropriedade(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("catalogo:list_config_propriedade")
+    elif request.method == 'GET':
+        form = {"form" : FormPropriedade}
+        return render(request, 'catalogo/create_config_propriedade.html', form)
+
+def delete_config_propriedade(request, prop_id):
+    ''' Função para deletar uma categoria.
+    '''
+    try:
+        prop_instanced = Propriedade.objects.get(pk=prop_id)
+    except Propriedade.DoesNotExist:
+        raise Http404("Registro da propriedade não existe.")
+    if request.method == 'POST':
+        prop_instanced.delete()
+        return redirect("catalogo:list_config_propriedade" )
 
 
 def detail_cr(request, categoria_id):
@@ -81,6 +142,12 @@ def detail_cr(request, categoria_id):
     return render(request, 'catalogo/detail_cr.html')
 
 def carrega_categorias(request):
+ 
+    from os import getcwd, path
+    print(__file__)
+    print(path.abspath(__file__))
+    print(path.dirname(path.abspath(__file__)))
+    return
     '''
     Função para carregar as categorias usando csv
     '''

@@ -1,12 +1,12 @@
 {% extends 'catalogo/base.html' %} 
-{% block  title %} Catalogo de serviço - Atualizar Categoria{% endblock  %}
+{% block  title %} Catalogo de serviço - criar Categoria{% endblock  %}
 {% block main%}
 {% load static %}
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif%}
 <main>
     <div class="container-fluid">
         <div class="container py-5 bg-light">
-            <form action="{% url 'catalogo:detail_config_categoria' categoria_id %}" method="POST" class="form-group">
+            <form action="{% url 'catalogo:create_config_categoria' %}" method="POST" class="form-group">
                     {% csrf_token %}
                     {% for field in form %}
                         <div class="form-group">
@@ -16,10 +16,6 @@
                         </div>
                     {% endfor %}
                 <input type="submit" class="w3-button w3-green w3-round" value="Salvar">
-            </form>
-            <form action="{% url 'catalogo:delete_config_categoria' categoria_id %}" method="POST" class="form-group">
-                {% csrf_token %}
-                <input type="submit" class="w3-button w3-red w3-round" value="Deletar">
             </form>
         </div>
     </div>
