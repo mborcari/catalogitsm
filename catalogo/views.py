@@ -37,7 +37,8 @@ def detail_config_integration(request):
             form.save()
             return redirect('/')
     elif request.method == 'GET':
-        form = {"form" : FormConfig(instance=config_instanced)}
+        form = FormConfig(instance=config_instanced)
+        form = {"form" : form }
         return render(request, 'catalogo/detail_config_integration.html', form)
 
 
@@ -65,7 +66,8 @@ def detail_config_categoria(request, categoria_id):
             return redirect("catalogo:list_config_categoria" )
     # Para get
     elif request.method == 'GET':
-        dados = {"form" : FormCategoria(instance=categoria_instanced), "categoria_id" : categoria_id }
+        form =  FormCategoria(instance=categoria_instanced)
+        dados = {"form" : form, "categoria_id" : categoria_id }
         return render(request, 'catalogo/detail_config_categoria.html', dados)
 
 
@@ -76,8 +78,9 @@ def create_config_categoria(request):
             form.save()
             return redirect("catalogo:list_config_categoria")
     elif request.method == 'GET':
-        form = {"form" : FormCategoria}
-        return render(request, 'catalogo/create_config_categoria.html', form)
+        form = FormCategoria
+        dados = {"form" : form}
+        return render(request, 'catalogo/create_config_categoria.html', dados)
 
 def delete_config_categoria(request, categoria_id):
     ''' Função para deletar uma categoria.
@@ -94,9 +97,8 @@ def delete_config_categoria(request, categoria_id):
 ###### View da configuração de propriedade
 def list_config_propriedade(request):
     propriedades_retornadas = Propriedade.objects.all()
-    dados = {}
-    dados["form"] = FormPropriedade
-    dados["propriedades"] = propriedades_retornadas
+    form = FormPropriedade
+    dados = {"form" : form, "propriedades" : propriedades_retornadas}
     return render(request, 'catalogo/list_config_propriedade.html', dados )
 
 def detail_config_propriedade(request, prop_id):
@@ -110,7 +112,8 @@ def detail_config_propriedade(request, prop_id):
             form.save()
             return redirect('catalogo:list_config_propriedade')
     elif request.method == 'GET':
-        dados = {'form' : FormPropriedade(instance=prop_instanced), 'prop_id' : prop_id}
+        form = FormPropriedade(instance=prop_instanced)
+        dados = {'form' : form, 'prop_id' : prop_id}
         return render(request, 'catalogo/detail_config_propriedade.html', dados)
 
 def create_config_propriedade(request):
@@ -120,8 +123,8 @@ def create_config_propriedade(request):
             form.save()
             return redirect("catalogo:list_config_propriedade")
     elif request.method == 'GET':
-        form = {"form" : FormPropriedade}
-        return render(request, 'catalogo/create_config_propriedade.html', form)
+        form = FormPropriedade
+        return render(request, 'catalogo/create_config_propriedade.html', {"form" : form})
 
 def delete_config_propriedade(request, prop_id):
     ''' Função para deletar uma categoria.
